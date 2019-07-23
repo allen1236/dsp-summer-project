@@ -19,7 +19,8 @@ y <- rep( c(0,1,0), N )
 dim(y) <- c(N,3)
 "
 
-wv <- wv %>%  as.matrix()
+wv <- lapply( wv, as.matrix )
+wv <- array( wv, c() )
 
 
 model <- keras_model_sequential() %>% 
