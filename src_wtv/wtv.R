@@ -2,7 +2,7 @@ library(dplyr)
 library(text2vec)
 library(tokenizers)
 library(stringi)
-setwd("/home/fhcwcsy/Documents/dsp2019summer-project/script")
+setwd("/home/fhcwcsy/Documents/2019dsp-summer-project/src_wtv")
 
 text_raw = readLines("../data/all_text.txt") 
 
@@ -33,7 +33,7 @@ dim(wv_context)
 
 word_vectors = wv_main + t(wv_context)
 
-write.csv( word_vectors, file = "../data/word_vectors.csv")
+write.csv( word_vectors, file = "../data_wtv/word_vectors.csv")
 
 # numFiles = nrow(word_vectors) %/% 50000 + 1
 # for (i in c(1:numFiles)) 

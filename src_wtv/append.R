@@ -2,9 +2,8 @@
 # combine the tweets into a big text file to feed them to GloVe
 library(pbapply)
 
-setwd("~/Documents/dsp2019summer-project/script")
-
-raw_data = read.csv( file = "../data/raw_data.csv", header = FALSE)
+setwd("/home/fhcwcsy/Documents/2019dsp-summer-project/src_wtv")
+raw_data = read.csv( file = "../data_raw/raw_data.csv", header = FALSE)
 data = raw_data
 colnames(data) = c( "target", "id", "date", "flag", "user", "text")
 
@@ -21,11 +20,11 @@ cleanText = function(text)
 
 data = mutate(data, text = cleanText(text))
 
-write.csv( data, "../data/cleaned_tweets.csv")
+write.csv( data, "../data_wtv/cleaned_tweets.csv")
 writeText = function(textElement, i)
 {
   textElement %>%
-    cat(file = "../data/all_text.txt", append = TRUE )
+    cat(file = "../data_wtv/all_text.txt", append = TRUE )
 }
 
 pblapply( data$text, writeText)
