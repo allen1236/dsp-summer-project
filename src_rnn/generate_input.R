@@ -3,13 +3,14 @@ library(dplyr)
 library(Matrix)
 setwd('~/Documents/2019dsp-summer-project')
 
-path_raw <- './data_wtv/cleaned_tweets.csv'
+path_raw <- './data_wtv/scrambled.csv'
 path_table <- './data_wtv/word_vectors.csv'
 path_output <- './data_rnn/'
 fix_length <- 40
 
+N <- 50000
 
-raw <- read.csv( path_raw, header=T, nrows=1000L )
+raw <- read.csv( path_raw, header=T, nrows=N )
 w2v_table <- read.csv( path_table, header=T )
 
 
@@ -32,12 +33,15 @@ extend <- function( d ) {
         return( rbind( d, matrix(0, fix_length-len, 200 ) ) )
     }
 }
-wv <- tokenize_tweets( as.character(raw[,7]), lowercase=T, strip_punct=F, simplify=F )
-wv <- lapply( wv, ws2v ) %>% lapply( extend )
-
-
+wv <- tokenize_tweets( as.character(raw[,3]), lowercase=T, strip_punct=F, simplify=F ) %>% 
+    lapply( ws2v ) %>% 
+    lapply( extend ) %>% 
+    lapply( as.matrix ) %>% 
+    lapply( t ) %>%
+    unlist( wv, recursive=F ) %>%  
+    as.array()
+dim( wv ) <- c( N, 40, 200 )
 save( wv, file=paste0(path_output, 'vector') )
 
-labels <- function(y) { as.integer( c(y==4, y==2, y==0) ) }
-labels <- lapply( raw$target, labels )
+labels <- as.numeric( raw[,2] == 4 ) 
 save( labels, file=paste0(path_output, 'label') )
