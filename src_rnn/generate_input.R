@@ -8,9 +8,9 @@ path_table <- './data_wtv/word_vectors.csv'
 path_output <- './data_rnn/'
 fix_length <- 40
 
-N <- 50000
+N <- 1000
 
-raw <- read.csv( path_raw, header=T, nrows=N )
+raw <- read.csv( path_raw, header=T, skip=20000, nrows=N )
 w2v_table <- read.csv( path_table, header=T )
 
 
@@ -38,10 +38,10 @@ wv <- tokenize_tweets( as.character(raw[,3]), lowercase=T, strip_punct=F, simpli
     lapply( extend ) %>% 
     lapply( as.matrix ) %>% 
     lapply( t ) %>%
-    unlist( wv, recursive=F ) %>%  
+    unlist( recursive=F ) %>%  
     as.array()
 dim( wv ) <- c( N, 40, 200 )
-save( wv, file=paste0(path_output, 'vector') )
+save( wv, file=paste0(path_output, 'vector_test') )
 
 labels <- as.numeric( raw[,2] == 4 ) 
-save( labels, file=paste0(path_output, 'label') )
+save( labels, file=paste0(path_output, 'label_test') )
