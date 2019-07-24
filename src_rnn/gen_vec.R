@@ -1,51 +1,78 @@
 library(tokenizers)
 library(dplyr)
 library(Matrix)
-setwd("/home/fhcwcsy/Documents/2019dsp-summer-project/")
+library(pbapply)
+#library(parallel)
+#library(ff)
+setwd("/home/fhcwcsy/Documents/2019dsp-summer-project/data_rnn")
 
-path_raw <- './data_wtv/scrambled.csv'
-path_table <- './data_wtv/word_vectors.csv'
-path_output <- './data_rnn/tweet_vec/'
-fix_length <- 40
+#cpuCores = detectCores()
+#cl <- makeCluster(cpuCores, type = "FORK")
 
-N <- 20000
-w2v_table <- read.csv( path_table, header=T )
+path_token_list <- '../data_wtv/token_list'
+path_table <- '../data_wtv/word_vectors_50000.csv'
+path_output <- '../data_rnn/vector/50000/'
+fix_length <- 30
 
-width <- ncol(w2v_table)
-length <- nrow(w2v_table)
+N <- 10000
+
+load(path_token_list)
+w2v_table = read.csv(file = path_table)
+
 rownames( w2v_table ) <- w2v_table[,1]
 w2v_table <- select( w2v_table, -X )
-
+#save(w2v_table, file = "../data_wtv/w2v_table.dm")
+count = 1
 ws2v <- function(w) { 
+    if(count %% 100 == 0)
+    {
+        print(count/100)
+    }
+    count <<- count + 1
     v <- w2v_table[w,] 
     v[is.na(v)] <- 0
     return( v )
 }
+
+stepRecord = F
+
 extend <- function( d ) {
     len = nrow(d)
-    if ( len >= fix_length ) {
+    if ( len > fix_length ) {
+        print("Warning: Tweet is truncated.")
         return( d[1:fix_length,] )
     }
     else {
         return( rbind( d, matrix(0, fix_length-len, 200 ) ) )
     }
+    if(stepRecord == F)
+    {
+    	count <<- 0
+    	stepRecord <<- T
+    }
+    if(count %% 100 == 0)
+    {
+	    print(count/100)
+    }
+    count <<- count + 1
 }
 
-for (sk in c(1:80)) {
+for (k in 1:6) {
 
-raw <- read.csv( path_raw, header=T, nrows=N , skip = ((sk-1) * 20000))
-
-wv <- tokenize_tweets( as.character(raw[,3]), lowercase=T, strip_punct=F, simplify=F ) %>% 
-    lapply( ws2v ) %>% 
-    lapply( extend ) %>% 
-    lapply( as.matrix ) %>% 
-    lapply( t ) %>%
-    unlist(  recursive=F ) %>%  
+wv = tokenList[(N * (k-1) + 1):( N * k)] %>% 
+    pblapply( ws2v ) %>%
+    pblapply( extend ) %>%
+    pblapply( as.matrix ) %>%
+    pblapply( t ) %>%
+    unlist( recursive=F ) %>%
     as.array()
-dim( wv ) <- c( N, 40, 200 )
-save( wv, file=paste0(path_output, 'vector', sk) )
-
+print("saving...")
+dim( wv ) <- c( 200, fix_length, N )
+wv <- aperm(wv)
+save( wv, file=paste0(path_output, 'vector_big_test_', k, ".dm") )
 }
+#print(paste0("done: ", k, "/5"))
+print("done")
 
-labels <- as.numeric( raw[,2] == 4 ) 
-save( labels, file=paste0(path_output, 'label') )
+
+#stopCluster(cl)
