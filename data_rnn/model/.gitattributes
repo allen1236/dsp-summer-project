@@ -1,0 +1,12 @@
+1600k filter=lfs diff=lfs merge=lfs -text
+50k filter=lfs diff=lfs merge=lfs -text
+very_clean filter=lfs diff=lfs merge=lfs -text
+50k/model_5_0.755400002002716.HDF5 filter=lfs diff=lfs merge=lfs -text
+50k/model_7_0.754999995231628.HDF5 filter=lfs diff=lfs merge=lfs -text
+very_clean/model_5_0.774999976158142.HDF5 filter=lfs diff=lfs merge=lfs -text
+very_clean/model_7_0.786800026893616.HDF5 filter=lfs diff=lfs merge=lfs -text
+50k/model_0.76.HDF5 filter=lfs diff=lfs merge=lfs -text
+very_clean/model_11_0.783999979496002.HDF5 filter=lfs diff=lfs merge=lfs -text
+very_clean/model_13_0.780600011348724.HDF5 filter=lfs diff=lfs merge=lfs -text
+very_clean/model_9_0.78219997882843.HDF5 filter=lfs diff=lfs merge=lfs -text
+50k/model_0.76_2.HDF5 filter=lfs diff=lfs merge=lfs -text
