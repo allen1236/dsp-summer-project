@@ -1,0 +1,991 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{xeCJK}
+\usepackage{physics}
+
+%\setCJKmainfont[AutoFakeBold=6,AutoFakeSlant=.4]{WenQuanYi Micro Hei}
+\setCJKmainfont[AutoFakeBold=6,AutoFakeSlant=.4]{TW-Kai}
+
+%\setmainfont{URW Gothic L}
+%\setmainfont{Century Schoolbook L}
+%\setmainfont{Liberation Serif}
+\setmainfont{FreeSerif}
+
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+%\renewcommand{\labelitemi}{$\blacksquare$}
+%\renewcommand{\labelitemii}{$\box$}
+%\renewcommand{\labelitemi}{$\blacktriangleright$}
+%\renewcommand{\labelitemii}{$\vartriangleright$}
+
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+
+\usepackage{circuitikz}
+
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{xCJKnumb}
+\usepackage{indentfirst}
+\titleformat{\section}{\Large}{\xCJKnumber{\thesection}、}{1em}{}
+\titlespacing{\section}{0cm}{0.3cm}{1em}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\titleformat{\subsection}{\large}{(\xCJKnumber{\thesubsection})}{1em}{}
+\renewcommand{\thesubsubsection}{(\arabic{subsubsection})}
+\titleformat{\subsubsection}{}{\thesubsubsection}{0.8em}{}
+
+\usepackage[]{caption2} 
+\renewcommand{\figurename}{} 
+\renewcommand{\captionlabeldelim}{ }
+\renewcommand{\thefigure}{圖(\xCJKnumber{\arabic{figure}}) }
+
+\renewcommand{\theequation}{11.\arabic{equation}}
+
+%\renewcommand{\CJKglue}{\hskip 0.1cm}
+%\linespread{1.2}
+\setlength{\parskip}{0.5\baselineskip}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{process} = [rectangle, minimum width=4in, minimum height=0.5in, text centered, draw=black]
+\tikzstyle{text} = [rectangle, minimum width=1in, minimum height=0.5in, text centered, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\title{
+    {\large 國立台灣大學電資學院電機工程學系\\
+    普通物理學實驗報告}\\
+    \quad \\
+    {\large 實驗十一}\\
+    滑線電位計
+}
+\author{}
+\date{}
+\begin{document}
+    \maketitle
+    \begin{center}
+        \quad\\
+        \quad\\
+
+        \quad\\
+        \begin{tabular}{rl}
+            組別:&第27組\\
+            系級:&電機一\\
+            學號:&B07901135\\
+            &B07901153\\
+            姓名:&何國瑋\\
+            &張亞薇\\
+            指導老師:&賀培銘\text{ }教授\\
+            助教:&陳昱嘉\\
+            &吳仁凱\\
+            實驗日期:&2019/03/05
+        \end{tabular}
+    \end{center}
+    \pagenumbering{gobble}
+    \newpage
+    \pagenumbering{arabic}
+
+    \section{實驗目的}
+
+        透過一長條狀均勻導體（電阻）製作並校準一「滑線電位計」，
+        並利用此電位計，配合一可變電阻，測量一待測電池的電動勢與內電阻。
+
+    \section{實驗原理}
+
+        \subsection{電池的電動勢與內電阻}
+
+            電池在電路中為電荷提供能量，
+            而每庫侖電荷在經過電池時所獲得的能量就稱為電動勢。
+            同時，由於能量守恆，每庫侖電荷在電路中所消耗的電位能，
+            即電位差$V$，與所獲得的電動勢$\varepsilon$相同。
+            兩者的單位皆為伏特，即焦耳/庫侖。\\
+
+            \begin{figure}[h]
+                \begin{minipage}{0.5\textwidth}
+                    \centering
+                    
+                    \begin{circuitikz}
+                        \draw
+                        (0,2) to[battery, l=$\varepsilon$, i<=$I$] (3,2)
+                        -- (3,0)
+                        to[R,l=$R$] (0,0)
+                        -- (0,2)
+                        ;
+                    \end{circuitikz}
+                    \caption{理想電池}
+                    \label{fig:ideal_battery}
+                \end{minipage}
+                \begin{minipage}{0.5\textwidth}
+                    \centering
+                    
+                    \begin{circuitikz}
+                        \draw
+                        \pgfextra{\ctikzset{bipoles/resistor/width=0.4,
+                            bipoles/resistor/hieght=0.1}}
+                        (-1,2)node[label={above:$A$}]{}--(1,2) 
+                        to[R, l=$r$] (2,2)
+                        to[battery, l=$\varepsilon$] (3,2)
+                        -- (5,2)
+                        node[label={above:$B$}]{}-- (5,0)
+                        \pgfextra{\ctikzset{bipoles/resistor/width=1,
+                            bipoles/resistor/hieght=1}}
+                        to[R,l=$R$] (-1,0)
+                        -- (-1,2)
+                        (0.5,1)--(0.5,3)--(3.5,3)--(3.5,1)--(0.5,1)
+                        (0.5,1.5)--(0.25,1.5)--(0.25,2.5)--(0.5,2.5)
+                        (-1,2) to[short, i<=$I$](0.5,2)
+                        ;
+                    \end{circuitikz}
+                    \caption{實際電池}
+                    \label{fig:real_battery}
+                    
+                \end{minipage}
+            \end{figure}
+
+            在一般的電路中，為了簡化電路，我們都將電池視為上述的理想電池。
+            然而，實際上，由於電池中有內電阻（$r$）的存在，
+            電荷在流經電池，獲得電動勢的同時，也會在內電阻上失去部分的電位能。
+            為了方便計算，我們可以將一個真正的電池看作是
+            一個電動勢$\varepsilon$的理想電池串連一個內電阻$r$
+            （如\ref{fig:real_battery}所示）。
+            那麼，根據歐姆定律（Ohm's law），
+            只要有任何電流$I$通過，兩端的端電壓$V_{AB}$即為
+            \begin{equation}
+                \label{eq:v_epsilon_ir}
+            V_{AB}=\varepsilon-\Delta V=\varepsilon-Ir<\varepsilon
+            \end{equation}
+            也就是說，只有在電流$I=0$時$V_{AB}=\varepsilon$，
+            隨著通過的電流$I$增加，電池的端電壓$V_{AB}$會越來越小。
+
+        \subsection{滑線電位計的工作原理}
+
+            由於內電阻在電池內部，我們真正能測量的只有電池的端電壓。
+            那麼，為了得到真正的電動勢，
+            我們勢必得利用$I=0$時$V_{AB}=\varepsilon$這點。
+            然而，一般的電壓計在測量電位差時，
+            是透過一個檢流計串連一個極大的電阻，
+            根據通過的電流$i$以及電阻值$R$來求出兩端的端電壓，
+            因此需要從待測電路中汲取部小部分的電流，
+            導致我們無法測量到真正的電動勢$\varepsilon$。\\
+
+            \begin{figure}[h]
+                \begin{minipage}{0.41\textwidth}
+                    \centering
+
+                    \begin{circuitikz}
+                        \draw
+                        (0,0)node[circ,label={above:$P$}]
+                        to[esource](2,0)
+                        to[R, l=$R$](3.5,0)
+                        --(4,0)node[circ,label={above:$Q$}]
+
+                        (1,-0.45)node[label={above:$G$}]
+                        ;
+                    \end{circuitikz}
+                    \caption{一般電壓計}
+                    \label{fig:volmeter}
+                \end{minipage}
+                \begin{minipage}{0.58\textwidth}
+                    \centering
+
+                    \begin{circuitikz}
+                        \draw
+                        (0,0)
+                        to[vR,l_=$R$](2,0)
+                        to[battery,l_=$W$](4,0)
+                        --(6,0)
+                        --(6,-2.5)
+                        --(5,-2.5)node[label={above:$C$}]
+                        to[R](3.5,-2.5)node[label={above:$B$}]
+                        to[R](2,-2.5)
+                        to[R](0.5,-2.5)node[circ,label={above:$A$}]
+                        --(0,-2.5)
+                        --(0,0)
+
+                        (0.5,-2.5)
+                        --(0.5, -5)node[circ,label={right:$P$}]
+
+                        (3.5,-5)node[circ,label={right:$Q$}]
+                        to[esource](3.5,-3)node[vcc]
+
+                        (3.5,-4.45)node[label={above:$G$}]
+                        ;
+                    \end{circuitikz}
+                    \caption{滑線電位計}
+                    \label{fig:slide_volmeter}
+                \end{minipage}
+            \end{figure}
+            
+            滑線電位計正好能解決這個問題。
+            如\ref{fig:slide_volmeter}所示，
+            $AC$之間為一均勻電阻線，$B$為一可移動端點，
+            $PQ$為待測電路的兩端點，
+            電壓源$W$與可變電阻$R_0$則能提供$AC$端固定的電壓。
+            由於$AC$之間為均勻電阻線，
+            我們知道
+            \begin{equation}
+                \label{eq:v_leanier}
+            V_{AB}=V_{AC}\times \frac{\overline{AB}}{\overline{AC}}
+            \end{equation}
+            那由於$A$點和$P$點的電位相同，
+            當$V_{PQ}=V_{AB}$時，
+            $B$點和$Q$點的電位也會相同，$BQ$之間不會有電流。
+            換句話說，將$PQ$接在電池兩端時，
+            只要調整$B$點的位置，
+            使$BQ$之間的檢流計讀數為零，
+            我們便能測得$V_{PQ}=V_{AB}$，
+            同時也能確定沒有從電池中汲取電流，
+            精確測得無電流通過的電池的端電壓（即電動勢）。
+
+        \subsection{測量待測電池的電動勢與內電阻}
+        \label{ssec:measure_r}
+
+           以滑線電位計直接測量電池兩端，
+           所測得的端電壓即為電池的電動勢$\varepsilon_{x}$。
+           （一般電壓計因為會有微小的電流通過，
+           由\ref{eq:v_epsilon_ir}式可知，
+           測得的值會略低於$\varepsilon_x$）
+           若要求電池的內電阻，
+           我們可以使用\ref{fig:measure_r}中的電路：
+
+           \begin{figure}[h]
+               \begin{minipage}{1\textwidth}
+                    \centering
+                    
+                    \begin{circuitikz}
+                        \draw
+                        \pgfextra{\ctikzset{bipoles/resistor/width=0.4,
+                            bipoles/resistor/hieght=0.1}}
+                        (-1,2)--(1,2) 
+                        to[R, l=$r$] (2,2)
+                        to[battery, l=$\varepsilon_{x}$] (3,2)
+                        -- (5,2)
+                        -- (5,0)
+                        \pgfextra{\ctikzset{bipoles/resistor/width=1,
+                            bipoles/resistor/hieght=1}}
+                        to[R,l=$R$] (-1,0)
+                        -- (-1,2)
+                        (0.5,1)--(0.5,3)--(3.5,3)--(3.5,1)--(0.5,1)
+                        (0.5,1.5)--(0.25,1.5)--(0.25,2.5)--(0.5,2.5)
+                        (-1,2) to[short, i<=$I$](0.5,2)
+                        (-1,0)node[circ,label={left:$P$}]{}
+                        (5,0)node[circ,label={right:$Q$}]{}
+                        ;
+                    \end{circuitikz}
+                    \caption{測量內電阻的電路}
+                    \label{fig:measure_r}
+               \end{minipage}
+           \end{figure}
+
+           \noindent 其中，$R$為一已知的可變電阻，
+           $V_{PQ}$則是我們要測量的電池的端電壓。
+           由於
+           \begin{equation}
+               \label{eq:vpq_mpsilon}
+           V_{PQ}=\frac{R}{R+r}\varepsilon_{x}
+           \end{equation}
+           透過測得的$V_{PQ}$與$\varepsilon_{x}$，以及已知的$R$，
+           便能求出內電阻$r$。
+           而為了減少誤差的影響，
+           較好的作法是以不同的$R$分別測量$V_{PQ}$並分析數據，
+           方法如下：
+           
+            \subsubsection{作$V-I$圖}
+                由(\ref{eq:v_epsilon_ir})式可得$V_{PQ}=\varepsilon_{x}-Ir$，
+                也就是說，\ref{fig:vi_example}的三$V-I$圖中，
+                $y$軸截距即為$\varepsilon_{x}$，
+                斜率$-r$則為負的內電阻值。
+
+            \begin{figure}[h]
+                \begin{minipage}{0.5\textwidth}
+                    \centering
+                    \includegraphics[height=2in]{vi_1.png}
+                    \caption{$V-I$圖}
+                    \label{fig:vi_example}
+                \end{minipage}
+                \begin{minipage}{0.5\textwidth}
+                    \centering
+                    \includegraphics[height=2in]{vr_1.png}
+                    \caption{$V-R$圖}
+                    \label{fig:vr_example}
+                \end{minipage}
+            \end{figure}
+
+            \subsubsection{作$V-R$圖}
+
+            由歐姆定律$\varepsilon_x=I(r+R)$，可得$I=\varepsilon_x / (r+R)$，
+            代入(\ref{eq:v_epsilon_ir})式並化簡，
+            可得
+            \begin{equation}
+                \label{eq:vr}
+            V_{PQ}=\varepsilon_x(\frac{R}{r+R})
+            \end{equation}
+
+            而當$R=r$時，$V_{PQ}=\varepsilon_{x}/2$，
+            \ref{fig:vr_example}上$V_{PQ}=\varepsilon/2$所對應的可變電阻值$R$
+            即為內電阻值$r$。
+                
+            \subsubsection{作$\frac{1}{V}-\frac{1}{R}$圖}
+                
+            將(\ref{eq:vr})式取倒數之後可得
+            \begin{equation}
+                \label{eq:1v1r}
+            \frac{1}{V_{PQ}}=\frac{r}{\varepsilon_x}\times \frac{1}{R}+\frac{1}{\varepsilon_x}
+            \end{equation}
+
+            因此，在$\frac{1}{V}-\frac{1}{R}$圖中，
+            最佳直線的$y$截距為$1/\varepsilon_x$，
+            最佳直線的斜率則為$r/\varepsilon_x$，
+            乘上$\varepsilon_x$即可得到內電阻值$r$。
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[height=2.8in]{1v1r_1.png}
+                \caption{$\frac{1}{V}-\frac{1}{R}$圖}
+                \label{fig:1v1r_ex}
+            \end{figure}
+                
+                
+               
+    \section{實驗流程}
+        
+        \subsection{實驗儀器}
+
+            \quad
+
+            \begin{figure}[h]
+                
+                \begin{minipage}{0.49\textwidth}
+                \centering
+                \includegraphics[height=1.5in]{ex1_b.png}
+                \caption{實驗裝罝示意圖（實驗A）}
+                \label{fig:ex1}
+                \end{minipage}
+                \begin{minipage}{0.49\textwidth}
+                \centering
+                \includegraphics[height=1.5in]{ex3_b.png}
+                \caption{實驗裝罝示意圖（實驗C）}
+                \label{fig:ex3}
+                \end{minipage}
+                
+            \end{figure}
+            
+        \begin{enumerate}[label={\Alph*. }, leftmargin=2\parindent]
+                \item 檢流計：確認是否有電流通過。
+                \item 標準電池：已知電動勢的電池，用以校正滑線電位計。
+                \item 工作電池：滑線電位計中的$W$，即$AC$之間的電壓來源。
+                \item 待測電池：電動勢與內電阻均為未知。
+                \item 電阻箱：在測量端電壓時作為已知的可變電阻使用。
+                \item 電阻線：即滑線電位計中$AC$之間的均勻電阻線。共六段，每段
+                    100cm長，總長600cm。
+            \end{enumerate}
+            
+            \begin{figure}[h]
+                \begin{minipage}{0.27\textwidth}
+                \centering
+                \includegraphics[height=1.5in]{g.jpg}
+                \caption{檢流計}
+                \label{fig:g}
+                \end{minipage}
+                \begin{minipage}{0.36\textwidth}
+                \centering
+                \includegraphics[height=1.5in]{standard_battery.jpg}
+                \caption{標準電池}
+                \label{fig:standard_battery}
+                \end{minipage}
+                \begin{minipage}{0.36\textwidth}
+                \centering
+                \includegraphics[height=1.5in]{working_battery.jpg}
+                \caption{工作電池}
+                \label{fig:working_battery}
+                \end{minipage}
+            \end{figure}
+            \begin{figure}[h]
+                \begin{minipage}{0.42\textwidth}
+                \centering
+                \includegraphics[height=2in]{test_battery.jpg}
+                \caption{待測電池}
+                \label{fig:test_battery}
+                \end{minipage}
+                \begin{minipage}{0.57\textwidth}
+                \centering
+                \includegraphics[height=2in]{changeable_r.jpg}
+                \caption{電阻箱}
+                \label{fig:changeable_r}
+                \end{minipage}
+            \end{figure}
+
+        \subsection{實驗步驟}
+            
+        \subsubsection{校準滑線電位計}
+        \label{sssec:ex1}
+
+        \begin{figure}[h]
+            \begin{minipage}{0.34\textwidth}
+                \centering
+                \includegraphics[height=1.7in]{ex1_a.png}
+                \caption{電路圖}
+                \label{fig:ex1_a}
+            \end{minipage}
+            \begin{minipage}{0.65\textwidth}
+                \centering
+                \includegraphics[height=1.7in]{ex1_b.png}
+                \caption{實際配置圖（圖中字母標示為器材編號）}
+                \label{fig:ex1_b}
+            \end{minipage}
+        \end{figure}
+
+        \begin{center}
+            \begin{tikzpicture}[node distance=0.7in]
+            
+                \node (n1) [process] {固定B點於距A點150cm處（可視標準電池所標示之電動勢調整）};
+                \node (n2) [process, below of=n1] {工作電池通電後調整D點位置，
+                    使檢流計讀數為零};
+                \node (n3) [process, below of=n2] {此時AB間電位差即為標準電池電動勢
+                ，回推並記錄工作電池端電壓};
+                \draw [arrow] (n1) -- (n2);
+                \draw [arrow] (n2) -- (n3);
+            
+            \end{tikzpicture}
+        \end{center}
+            
+        \subsubsection{利用滑線電位計測量待測電池的電動勢$\varepsilon_x$}
+
+        \quad
+
+        \begin{figure}[h]
+            \begin{minipage}{0.34\textwidth}
+                \centering
+                \includegraphics[height=2in]{ex2_a.png}
+                \caption{電路圖}
+                \label{fig:ex2_a}
+            \end{minipage}
+            \begin{minipage}{0.65\textwidth}
+                \centering
+                \includegraphics[height=2in]{ex2_b.png}
+                \caption{實際配置圖（圖中字母標示為器材編號）}
+                \label{fig:ex2_b}
+            \end{minipage}
+        \end{figure}
+
+        \begin{center}
+            \begin{tikzpicture}[node distance=0.7in]
+            
+                \node (n1) [process] 
+                {將實驗\ref{sssec:ex1}中的標準電池換成待測電池};
+                \node (n2) [process, below of=n1] 
+                {D點固定，調整B點位置使檢流計讀數為零，記錄AB距離};
+            
+                \draw [arrow] (n1) -- (n2);
+            
+            \end{tikzpicture}
+        \end{center}
+        
+        \newpage
+        \subsubsection{求待測電池內電阻值$r$}
+
+        \quad
+
+        \begin{figure}[h]
+            \begin{minipage}{0.36\textwidth}
+                \centering
+                \includegraphics[height=1.9in]{ex3_a.png}
+                \caption{電路圖}
+                \label{fig:ex3_a}
+            \end{minipage}
+            \begin{minipage}{0.63\textwidth}
+                \centering
+                \includegraphics[height=1.9in]{ex3_b.png}
+                \caption{實際配置圖（圖中字母標示為器材編號）}
+                \label{fig:ex3_b}
+            \end{minipage}
+        \end{figure}
+
+        \begin{center}
+            \begin{tikzpicture}[node distance=0.7in]
+            
+                \node (n1) [process] 
+                {將待測電池與電阻箱上的電阻並聯，如\ref{fig:ex3_a}所示};
+                \node (n2) [process, below of=n1, xshift=-1.2in, yshift=-0.2in] 
+                {移動B點，使檢流計讀數為零};
+                \node (n3) [process, below of=n2] 
+                {記錄AB之間的距離並推算待測電池的端電壓};
+                \node (n4) [process, below of=n3] 
+                {改變電阻箱上的電阻值，再次測量端電壓};
+                \node (n5) [text, right of=n3, xshift=2.4in] 
+                {10個電阻值，重複兩次};
+                \node (n6) [process, below of=n4, xshift=1.2in, yshift=-0.2in]
+                {根據數據作$V-I$圖，$V-R$圖，以及$\frac{1}{V}-\frac{1}{R}$圖};
+                \node (n7) [process, below of=n6]
+                {以前面實驗原理第(\xCJKnumber{\ref{ssec:measure_r}})部分提過的方式分別求出內電阻};
+                
+            
+                \draw [arrow] (n1) -- (n2);
+                \draw [arrow] (n2) -- (n3);
+                \draw [arrow] (n3) -- (n4);
+                \draw [arrow] (n4) -| (n5);
+                \draw [arrow] (n5) |- (n2);
+                \draw [arrow] (n4) -- (n6);
+                \draw [arrow] (n6) -- (n7);
+
+            
+            \end{tikzpicture}  
+        \end{center}
+
+    \section{數據整理與分析}
+        
+            \subsection{校準滑線電位計}
+
+                已知：
+
+                \begin{itemize}
+                    \item 標準電池電動勢：$1.5V$
+                    \item AB接點距離：$150.00cm$
+                \end{itemize}
+
+                調整D點位置至檢流計讀數為零時：
+
+                \begin{itemize}
+                    \item CD接點距離：$486.80cm$
+                \end{itemize}
+
+                推得工作電池$W$端電壓：
+                $$1.5V\times \frac{486.80cm}{150.00cm}=4.8680V$$
+
+                此時每$100.00cm$電位降落$1Volt$，之後D點固定不動。
+
+            \subsection{利用滑線電位計測量待測電池的電動勢$\varepsilon_x$}
+                
+                將標準電池換成待測電池，直接以滑線電位計測量電動勢：
+
+                \begin{itemize}
+                    \item 檢流計讀數為零時，AB接點距離：$141.38cm$
+                \end{itemize}
+
+                推得待測電池電動勢$\varepsilon_x$：
+                $$\varepsilon_x = 1V\times \frac{141.38cm}{100.00cm}=1.4138V$$
+                
+            \newpage
+            \subsection{求待測電池內電阻值$r$}
+
+                以十個不同的電阻值，做兩次同樣的實驗
+                （完整數據表格附在第\xCJKnumber{\ref{sec:data}}部分的原始數據中）。
+                作圖分析內電阻值$r$以及數據圖顯示之電動勢$\varepsilon_x$誤差：
+
+                \subsubsection{$V-I$圖}
+
+                \begin{figure}[h]
+                    \begin{minipage}{0.99\textwidth}
+                        \centering
+
+                        \includegraphics[height=3in]{vi_1.png}
+                        \caption{}
+                        \label{fig:vi_1}
+                    \end{minipage}
+                    \begin{minipage}{0.99\textwidth}
+                        \centering
+
+                        \includegraphics[height=3in]{vi_2.png}
+                        \caption{}
+                        \label{fig:vi_2}
+                    \end{minipage}
+                \end{figure}
+
+                由圖中可以看出，端電壓V與電流值I為一次線性關係。
+                考慮$V=\varepsilon_x-Ir$，實驗結果符合理論。
+                從兩次實驗數據的趨勢線中分別可以得到：
+                $$
+                \begin{cases}
+                    &V_{1}=1.4135-24.2610I_1, \quad \varepsilon_{x1}=1.4135(Volt),\quad r_1=24.2610(Ohm)\\
+                    &V_{2}=1.4070-23.3100I_2, \quad \varepsilon_{x2}=1.4070(Volt),\quad r_2=23.3100(Ohm)\\
+                \end{cases}
+                $$
+                \begin{itemize}
+                    \item $\varepsilon_x$平均值：1.4102(Volt)
+                    \item $\varepsilon_x$標準差：0.0046(Volt)
+                    \item $r$平均值：23.7855(Ohm)
+                    \item $r$標準差：0.6725(Ohm)
+                \end{itemize}
+                若以實驗二測出的待測電池電動勢（$\varepsilon_x=1.4138Volt$）為標準，百分誤差為：
+                $$\frac{1.4102-1.4138}{1.4138}\approx -0.25\%$$
+
+                \subsubsection{$V-R$圖}
+                    
+                \begin{figure}[h]
+                    \begin{minipage}{0.99\textwidth}
+                        \centering
+
+                        \includegraphics[height=3in]{vr_1.png}
+                        \caption{}
+                        \label{fig:vr_1}
+                    \end{minipage}
+                \end{figure}
+                \newpage
+                \begin{figure}[h]
+                    \begin{minipage}{0.99\textwidth}
+                        \centering
+
+                        \includegraphics[height=3in]{vr_2.jpg}
+                        \caption{}
+                        \label{fig:vr_2}
+                    \end{minipage}
+                \end{figure}
+                \noindent 由(\ref{eq:vr})式可推算，當$R$趨近無限大時
+                $$\lim_{R\rightarrow \infty}V=\lim_{R\rightarrow \infty}\varepsilon_x(\frac{R}{r+R})=\varepsilon_x$$
+                因此實驗結果符合理論。從兩次實驗的圖表中可以得到：
+                $$
+                \begin{cases}
+                    &\varepsilon_{x1}\approx 1.4(Volt),\quad r_1\approx 20(Ohm)\\
+                    &\varepsilon_{x2}\approx 1.4(Volt),\quad r_2\approx 20(Ohm)\\
+                \end{cases}
+                $$
+                \begin{itemize}
+                    \item $\varepsilon_{x}$平均值：1.4(Volt)
+                    \item $r$平均值：20(Ohm)
+                \end{itemize}
+                由於只是大略從圖形估計的值，在此就不作標準差與百分誤差的討論，
+                但得出的$\varepsilon_x$跟我們一開始測量出的$\varepsilon_x$相當接近，
+                得出的$r$也與我們用其他方式求出的$r$相當接近，所以結果是符合理論值的。
+                \newpage
+
+                \subsubsection{$\frac{1}{V}-\frac{1}{R}$圖}
+
+                \begin{figure}[h]
+                    \begin{minipage}{0.99\textwidth}
+                        \centering
+
+                        \includegraphics[height=3in]{1v1r_1.png}
+                        \caption{}
+                        \label{fig:1v1r_1}
+                    \end{minipage}
+                    \begin{minipage}{0.99\textwidth}
+                        \centering
+
+                        \includegraphics[height=3in]{1v1r_2.png}
+                        \caption{}
+                        \label{fig:1v1r_2}
+                    \end{minipage}
+                \end{figure}
+
+                從實驗數據的圖形可看出，
+                端電壓$V$的倒數與外部電阻$R$的倒數成正比，
+                且為一次線性關係。
+                由前面實驗原理提到過的(\ref{eq:1v1r})式可知，
+                實驗結果符合理論。
+                而從實驗結果的趨勢線，
+                我們可以得到
+                $$
+                \begin{cases}
+                    &\frac{1}{V_1}=16.520 \frac{1}{R_1} + 0.7302,\quad \frac{r_1}{\varepsilon_{x1}}=16.520,\quad \frac{1}{\varepsilon_{x1}}=0.7302\\
+                    &\frac{1}{V_2}=16.079 \frac{1}{R_2} + 0.7283,\quad \frac{r_2}{\varepsilon_{x2}}=16.079,\quad \frac{1}{\varepsilon_{x1}}=0.7283
+                \end{cases}
+                $$
+                \noindent 因此
+                $$
+                \begin{cases}
+                    &\varepsilon_{x1}=1.3695(Volt), \quad r_1 = 22.624(Ohm)\\
+                    &\varepsilon_{x2}=1.3731(Volt), \quad r_2 = 22.078(Ohm)
+                \end{cases}
+                $$
+                \begin{itemize}
+                    \item $\varepsilon_x$平均值：1.3731(Volt)
+                    \item $\varepsilon_x$標準差：0.0026(Volt)
+                    \item $r$平均值：22.351(Ohm)
+                    \item $r$標準差：0.386(Ohm)
+                \end{itemize}
+                若以實驗二測出的待測電池電動勢（$\varepsilon_x=1.4138Volt$）為標準，百分誤差為：
+                $$\frac{1.3731-1.4138}{1.4138}\approx -2.8\%$$
+
+
+    \section{誤差討論}
+
+        \subsection{影響準確度的因素}
+            \begin{itemize}
+                \item 一開始使用的標準電池的實際電動勢若與標示的實際電動勢有誤差，
+                    會導致校正有誤，影響所有後續實驗的數值。舉例而言，
+                    若實際電動勢較大，則校正後的滑線電位計測出來的端電壓都會
+                    比實際上的端電壓小。
+                \item 所有用來連接的電線實際上都有極小的電阻，
+                    雖說在滑線電位計中的BQ導線與AP導線上不會造成影響
+                    （因為電流為零），但在實驗多組數據求內電阻時，
+                    由於這些微小電阻是與我們控制的可變電阻串連，
+                    實際上的電池外部電阻會比我們以為的還大
+                    （但如果導線品質夠好，這部份的誤差其實小到可以忽略）。
+                \item 電阻線的粗細並不可能完全均勻，
+                    因此我們在以長度比作為電阻值比例的時候可能會有些微的偏差。
+            \end{itemize}
+        \subsection{影響精確度的因素}
+            \begin{itemize}
+                \item 由於B接點透過鱷魚夾連接，­
+                    而鱷魚夾的頭本身有寬度且與電阻線
+                    之間有兩個以上的接觸點，因此很難精確判斷
+                    AB接點的實際距離。
+                \item 雖說檢流計十分敏感，但人眼在對齊指針與刻度時還是會有些微的誤差，
+                    所以紀錄距離時檢流計的電流並非真的都是零（但由於檢流計的刻度很小，
+                    此誤差也非常小）
+                \item 由於溫度會影響導體的電阻值，而我們並不能保證實驗過程中溫度都保持一致，
+                    人的體溫和通電等因素都會影響溫度，
+                    因此外部電阻的實際值並不完全準確。
+                \item 其他人為測量時的誤差，如對齊刻度等。
+            \end{itemize}
+        \subsection{改進建議}
+            針對上述提到的誤差因素中，影響較大的因素，比較能改進的有：
+            \begin{itemize}
+                \item B接點應採用接觸面積較小的器材，如探針等，
+                    這樣比較能準確量出AB接點間的距離。
+                \item 電阻線底下的長度刻度應該延長到所有電阻線下面，
+                    這樣才能更精確地對齊刻度並測量。
+                \item 實驗前可先確保所有器材的品質，如導線與檢流計等。
+                    若接觸點有生鏽等情形也會影響接觸時的導電情形，
+                    應更換器材，盡量在實驗前排除這些因素。
+            \end{itemize}
+            
+            
+        
+    \section{思考問題}
+        \begin{enumerate}
+            \item 回答原理中兩個問題
+                \begin{enumerate}[(1)]
+                    \item 為什麼只有當B的位置恰使得AB間的電壓等於$V_{PQ}$之值的時候，
+                        電流計G的讀數才會是0
+
+                        因為電位補償效應，當一個loop中有方向相反、
+                        值相同的電動勢，則總電動勢會因此為0，造成電流$I=0$。
+                        根據(\ref{eq:v_epsilon_ir})式，
+                        即可無視內電阻的問題直接求得$\varepsilon_x$。 
+                    \item 若使用滑線電位計直接測電池內兩端的電壓，
+                        就直接可知其電動勢ε了，若用一般的電壓表，
+                        測得的值則理論上會略低於電動勢ε，為什麼？
+                        
+                        因為一般電池內會有內電阻$r$，
+                        而一般電壓表中會有一個大的電阻$R$與檢流計串連，
+                        所以根據(\ref{eq:vr})式，我們測到的端電壓$V$會是
+                        $$V=\varepsilon_x(\frac{R}{r+R})$$
+                        因為$R/(r+R)<1$，得到的值必比理論值低。 
+                \end{enumerate}
+            \item 
+                滑線電位計本身使用的電池也有內電阻，
+                又線路個接點可能有內電阻，
+                這些因素會影響實驗結果嗎？標準電池的內電阻呢？
+                
+                不會影響。因為滑線電路的測量原理為使產生電位補償效應，
+                進而使電流等於0，以此來將內電阻或其他電阻所造成的誤差消除。
+                而由此可知，無論誤差電阻總量為何，都可以直接忽略，
+                假設標準電池內有內電阻亦然。 
+            \item 從此實驗中,什麼條件下我們會說電池沒電了？
+                
+                沒電是指所測端電壓$V$趨近於0，也就是$Ir$趨近於$\varepsilon$
+                （由(\ref{eq:v_epsilon_ir})式）。
+                可以推斷因內電阻$r$隨時間變得越來越大，
+                所以只要有一點電流，
+                就會直接使$Ir$趨近於$\varepsilon$，$V$趨近於0。 
+            \item 
+                如果待測的電池電動勢曾為現今的5倍左右，
+                利用這次實驗架構可以如何量測出此待測電阻的電動勢?
+
+                為了使能供成功量測各種變成原來五倍的較大數值，
+                我們可以在校準滑線電位計時，
+                將AB接點間的距離變成原本的十分之一:
+
+                \begin{center}
+                        \begin{tabular}{|c|c|c|}
+                        \hline
+                        & 原數值與單位 & 更改後數值與單位\\ \hline
+                        標準電池（$1.5V$）接點間電阻線長 & $150cm$ & $15cm$\\ \hline
+                        電位降落$1Volt$所對應的電阻線長 & $100cm$ & $10cm$ \\ \hline
+                        \end{tabular}
+                \end{center}
+        \end{enumerate}
+            
+    \section{原始數據}
+    \label{sec:data}
+
+        \subsection{校準滑線電位計}
+            
+                \begin{itemize}
+                    \item 檢流計讀數為零時，CD接點距離：$486.80cm$
+                    \item 推得工作電池$W$端電壓：$4.8680V$
+                \end{itemize}
+
+        \subsection{利用滑線電位計測量待測電池的電動勢$\varepsilon_x$}
+            
+                \begin{itemize}
+                    \item 檢流計讀數為零時，AB接點距離：$141.38cm$
+                    \item 推得待測電池電動勢$\varepsilon_x$：$1.4138V$
+                \end{itemize}
+
+        \subsection{求待測電池內電阻值$r$}
+
+        \begin{figure}[h]
+            \begin{minipage}{0.99\textwidth}
+                \centering
+                \includegraphics[height=1.7in]{table.png}
+                \caption{原始數據表格}
+                \label{fig:table}
+            \end{minipage}
+        \end{figure}
+
+            \newpage
+
+                \subsubsection{$V-I$圖}
+
+                \begin{figure}[h]
+                    \begin{minipage}{0.49\textwidth}
+                        \centering
+
+                        \includegraphics[height=2in]{vi_1.png}
+                        \caption{}
+                        \label{fig:vi_1}
+                    \end{minipage}
+                    \begin{minipage}{0.49\textwidth}
+                        \centering
+
+                        \includegraphics[height=2in]{vi_2.png}
+                        \caption{}
+                        \label{fig:vi_2}
+                    \end{minipage}
+                \end{figure}
+
+                $$
+                \begin{cases}
+                    &V_{1}=1.4135-24.2610I_1, \quad \varepsilon_{x1}=1.4135(Volt),\quad r_1=24.2610(Ohm)\\
+                    &V_{2}=1.4070-23.3100I_2, \quad \varepsilon_{x2}=1.4070(Volt),\quad r_2=23.3100(Ohm)\\
+                \end{cases}
+                $$
+                \begin{itemize}
+                    \item $\varepsilon_x$平均值：1.4102(Volt)
+                    \item $r$平均值：23.7855(Ohm)
+                \end{itemize}
+
+                \subsubsection{$V-R$圖}
+                    
+                \begin{figure}[h]
+                    \begin{minipage}{0.49\textwidth}
+                        \centering
+
+                        \includegraphics[height=2in]{vr_1.png}
+                        \caption{}
+                        \label{fig:vr_1}
+                    \end{minipage}
+                    \begin{minipage}{0.49\textwidth}
+                        \centering
+
+                        \includegraphics[height=2in]{vr_2.jpg}
+                        \caption{}
+                        \label{fig:vr_2}
+                    \end{minipage}
+                \end{figure}
+
+                $$
+                \begin{cases}
+                    &\varepsilon_{x1}\approx 1.4(Volt),\quad r_1\approx 20(Ohm)\\
+                    &\varepsilon_{x2}\approx 1.4(Volt),\quad r_2\approx 20(Ohm)\\
+                \end{cases}
+                $$
+                \begin{itemize}
+                    \item $\varepsilon_{x}$平均值：1.4(Volt)
+                    \item $r$平均值：20(Ohm)
+                \end{itemize}
+
+                \subsubsection{$\frac{1}{V}-\frac{1}{R}$圖}
+
+                \begin{figure}[h]
+                    \begin{minipage}{0.49\textwidth}
+                        \centering
+
+                        \includegraphics[height=2in]{1v1r_1.png}
+                        \caption{}
+                        \label{fig:1v1r_1}
+                    \end{minipage}
+                    \begin{minipage}{0.49\textwidth}
+                        \centering
+
+                        \includegraphics[height=2in]{1v1r_2.png}
+                        \caption{}
+                        \label{fig:1v1r_2}
+                    \end{minipage}
+                \end{figure}
+
+                $$
+                \begin{cases}
+                    &\varepsilon_{x1}=1.3695(Volt), \quad r_1 = 22.624(Ohm)\\
+                    &\varepsilon_{x2}=1.3731(Volt), \quad r_2 = 22.078(Ohm)
+                \end{cases}
+                $$
+                \begin{itemize}
+                    \item $\varepsilon_x$平均值：1.3731(Volt)
+                    \item $r$平均值：22.351(Ohm)
+                \end{itemize}
+
+    \section{補充資料與閱讀心得}
+        
+        \noindent 資料來源：College Physics, 28.2-28.6
+         
+
+        這章節主要所提為電流與電阻，概念都偏基礎，
+        像是電流與電子移動方向的關係、其中個人較沒有注意的是其電流密度的值，
+        像是電流密度$J=I/A$（$A$為面積、$I$為電流），
+        而衍伸出來的物質傳導率的概念$\sigma=J/E$。
+        這個項目的重要性跟助教在課堂上提及的趨膚效應有關係，
+        不再贅述。除趨膚效應，發現亦跟電阻材料的穩定有關，
+        由於過多的能量材料會以熱的方式消耗，為避免過熱將電阻融掉，
+        我們已得注意電流密度。影響更重者如超導體，
+        還會因為產生磁場而自發性地喪失超導性值。
+        發現這不失一個重要的數值。
+        
+        \noindent 在整章中最讓人有印象的是將電阻傳導率和溫度一併討論的部分。\\
+        首先最為基礎的是:
+        $$\frac{I}{A}=\sigma \frac{V_1-V_2}{L}\quad (\sigma\text{為傳導率，}L\text{為勞倫茲常數})$$
+        \noindent 及其衍伸的:
+        $$H=KA\frac{t_1-t_2}{L}\quad 
+        \text{($H$是熱流、$K$是熱常數、$t_1, t_2$是起始結束的時間。)}$$
+
+        傳導率和溫度的差別在書中提起的並非只有數學上的相關，
+        更有著用維德曼–夫蘭茲定理可以解釋的相關性。
+        基本上，電子除了作為一種對「使電流產生」及「決定其速度」兩項很有關係的物質，
+        他多多少少也作為傳遞熱能的物質，
+        因此我們可以發現有些材質-像有些金屬，
+        在電流傳導性上和熱能傳導性的大致符合以下公式:
+        $$\frac{K}{\sigma}=3(\frac{k}{e})\times 2T$$
+        由此可知熱傳導係數和電傳導係數的關係跟溫度相關。
+        這些可以推算在實驗其他歐姆相關實驗可能出現的誤差，
+        因為由前述回答問題的答案中我們可以知道，在用滑線電位計測量端電壓時，
+        由於會呈現無電流狀態所以可以忽視所有沒考慮到的電阻數值。
+         
+    \section{參考資料}
+
+        \begin{itemize}
+            \item 國立台灣大學普通物理實驗（107學年度）：實驗十一 滑線電位計
+            \item College Physics, 28.2-28.6 
+        \end{itemize}
+        
+    \section{實驗心得}
+    
+    基本上，最首先有的心得是工具的正確應用，可以為實驗中和實驗後的結報製作省時省力。
+    例如，在收集實驗數據以得出想要的數據項目這點中，
+    我們發現excel的利用是一個既效率、又可以因為需要在實驗前準備而加深對公式印象的好習慣。
+    除了我們組也因此比其他組還要有效率，也更快在實驗開始後了解接下來動作的目的、應得結果。
+
+    儘管是較為簡易的實驗，也有遇到一些預料之外的問題。
+    例如測量長度的誤差，使用的方法為用物品延伸電阻上定點到尺上刻度，
+    然而發現所選用物品的厚薄其實會影響量測精準度，因此立刻進行更換成更薄物品的動作。
+    還有，有時使儀器歸0太過困難，後來才發現並非我們操作的問題，而是儀器本身的問題，
+    因此及時向鄰桌借用儀器才順利完成實驗。及時發現需要修正的點是很重要的事情。
+
+    最後，這個實驗有諸多誤差，例如來自於檢流計是否精確地歸0，
+    以及量測電阻線長度的困難。
+    個人認為，有時是實驗法的問題，
+    但其實有時是有關個人對實驗精準度的追求，
+    以及是否僅是要得出一個大致結論的態度。
+    在首次進行較高中更為要求精細度的大學實驗時，
+    深刻地感受到哪怕是僅是驗證所學的實驗，
+    都應該抱持在進行為求假設真實與否的實驗時，應該抱有的嚴謹。 
+        
+\end{document}

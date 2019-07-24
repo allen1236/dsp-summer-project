@@ -8,9 +8,9 @@ library(abind)
 
 setwd('~/2019dsp-summer-project/')
 
-data_name <- '50k'
+data_name <- 'very_clean'
 path_model <- paste0( './data_rnn/model/', data_name, '/model' )
-path_vector <- paste0( './data_rnn/wvs/', data_name , '/vector_big_test_' )
+path_vector <- paste0( './data_rnn/wvs/', data_name , '/vector_very_clean_' )
 path_label <- './data_rnn/label_list'
 l <- 30
 w <- 200

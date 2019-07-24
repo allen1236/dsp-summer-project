@@ -7,10 +7,12 @@ source( './src_rnn/w2v_header.R')
 # word2vec()
 # tokenize()
 
-install_tensorflow( version='gpu' )
-install_keras( tensorflow='gpu' )
-model <- load_model_hdf5( './data_rnn/model/50k/model_10_0.763400018215179.HDF5')
+model <- load_model_hdf5( './data_rnn/model/very_clean/model_7_0.786800026893616.HDF5')
 
-x <- c( 'I hate this world', 'I am so happy', 'fuck you', "I'm having a bad headache" ) %>% tokenize() %>% word2vec()
+while( T ) {
+    msg <- readline( prompt="Enter a sentence: " )
+    x <- c( msg ) %>% tokenize() %>% word2vec()
+    eval <- model %>% predict( x, verbose=0 )
+    ifelse(eval<0.5, 'Negative', 'Positive') %>% paste0( '   (', eval, ')' ) %>% print() 
+}
 
-model %>% predict( x, verbose=0 )

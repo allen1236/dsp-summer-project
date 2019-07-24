@@ -33,6 +33,16 @@
 
 \usepackage{xparse}
 
+%----------------------------------------
+
+%\usepackage{tikz}
+%\usetikzlibrary{shapes.geometric, arrows}
+%\tikzstyle{process} = [rectangle, minimum width=4in, minimum height=0.5in, text centered, draw=black]
+%\tikzstyle{text} = [rectangle, minimum width=1in, minimum height=0.5in, text centered, draw=black]
+%\tikzstyle{arrow} = [thick,->,>=stealth]
+
+%----------------------------------------
+
 \title{Tweets Sentiment Analysis}
 \author{Kuo-Wei Ho\inst{1}, Hao-Chien Wang\inst{2}}
 
@@ -103,13 +113,14 @@
 \section{Steps}%
 \label{sec:steps}
 
+
 \begin{frame}{Steps: Overview}
 	\begin{enumerate}
 		\item Clean the data: remove non-UTF8 symbols, numbers and URLs.
 		\item Combine all tweets into one string and tokenize.
 		\item Feed the tokens to GloVe to generate word vectors.
-		\item Tokenize all tweets and search each words in the vectors to transform it into a list of matrices.
-		\item Train the RNN model with the list of metrices.
+		\item tokenize all tweets and search each words in the vectors to transform it into a list of matrices.
+		\item Train RNN with the list of word vectors.
 	\end{enumerate}	
 \end{frame}
 
@@ -206,7 +217,7 @@
 \end{frame}
 
 
-\begin{frame}{Dark Magic}
+\begin{frame}{Dark Magic Functions}
 	\begin{itemize}
 		\item \texttt{save()/load()}
 		\item \texttt{pbapply}
