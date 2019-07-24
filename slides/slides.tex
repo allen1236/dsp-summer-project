@@ -6,6 +6,12 @@
 %\usepackage[utf8]{inputenc}
 \usefonttheme[onlymath]{serif}
 %\usepackage[T1]{fontenc}
+
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Sans CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Noto Sans CJK SC}
+
 \usetheme{Madrid}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -45,7 +51,7 @@
 	NTUPhys
 }
 \date[DSP 2019]
-{Data Science Programing,\\July 2019}
+{Data Science Programing, July 2019\\{\scriptsize Instructor: 蔡芸琤}\\{\scriptsize TA: 王冠人, 萬俊彥, 何承諭}}
 
 \begin{document}
 
@@ -81,12 +87,6 @@
 	{\scriptsize Github link: \url{https://github.com/b07901135/2019dsp-summer-project}}
 \end{frame}
 
-\section{Results}%
-\label{sec:results}
-
-\begin{frame}{title}
-
-\end{frame}
 
 \section{Key tools}%
 \label{sec:key_tools}
@@ -114,9 +114,10 @@
 \end{frame}
 
 \begin{frame}{Steps: Overview}
-	\begin{equation}
-		\mathbb{CHART}
-	\end{equation}
+    \begin{figure}[h]
+        \includegraphics[trim={2cm 5cm 0 12cm},clip,height=3in]{img/flow_chart.pdf}
+        \label{fig:}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Steps: Data Cleaning and Vectorization}
@@ -177,19 +178,37 @@
 		\begin{tabular}{c c}
 			sentiment & tweets \\
 			\hline
-			0 & $ \mathbf{A}_{ 30 \times 20 }  $ \\
-			0 & $ \mathbf{B}_{ 30 \times 20 }  $ \\
-			4 & $ \mathbf{C}_{ 30 \times 20 }  $ \\
-			4 & $ \mathbf{D}_{ 30 \times 20 }  $ \\
+			0 & $ \mathbf{A}_{ 30 \times 200 }  $ \\
+			0 & $ \mathbf{B}_{ 30 \times 200 }  $ \\
+			4 & $ \mathbf{C}_{ 30 \times 200 }  $ \\
+			4 & $ \mathbf{D}_{ 30 \times 200 }  $ \\
 		\end{tabular}
 	\end{table}
 	
 \end{frame}
 
 \begin{frame}{Steps: RNN Fitting}
+
+    \begin{figure}[h]
+        \includegraphics[trim={1cm 12cm 0 6cm},clip]{img/rnn.pdf}
+    \end{figure}
 		
 \end{frame}
 
+\section{Results}%
+\label{sec:results}
+\begin{frame}{Result}
+    \begin{itemize}
+        \item The best result we got is a precision of 78.68\% (5000 testing data).
+    \end{itemize}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width = 0.45 \textwidth]{../data_rnn/plot/accplot.pdf}
+        \includegraphics[width = 0.45 \textwidth]{../data_rnn/plot/lossplot.pdf}
+        \caption{Training process.\label{fig:result}}
+    \end{figure}
+
+\end{frame}
 \section{Difficulties encountered}%
 \label{sec:difficulties_encountered}
 
@@ -213,6 +232,7 @@
 		\item \texttt{gc()}
 		\item \texttt{rm()}
 		\item \texttt{abind()}
+		\item \texttt{melt()}
 
 	\end{itemize}
 	
