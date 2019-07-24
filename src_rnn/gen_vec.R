@@ -10,8 +10,8 @@ setwd("/home/fhcwcsy/Documents/2019dsp-summer-project/data_rnn")
 #cl <- makeCluster(cpuCores, type = "FORK")
 
 path_token_list <- '../data_wtv/token_list'
-path_table <- '../data_wtv/word_vectors_50000.csv'
-path_output <- '../data_rnn/vector/50000/'
+path_table <- '../data_wtv/word_vectors_very_clean.csv'
+path_output <- '../data_rnn/vector/very_clean/'
 fix_length <- 30
 
 N <- 10000
@@ -69,7 +69,8 @@ wv = tokenList[(N * (k-1) + 1):( N * k)] %>%
 print("saving...")
 dim( wv ) <- c( 200, fix_length, N )
 wv <- aperm(wv)
-save( wv, file=paste0(path_output, 'vector_big_test_', k, ".dm") )
+save( wv, file=paste0(path_output, 'vector_very_clean_', k, ".dm") )
+gc()
 }
 #print(paste0("done: ", k, "/5"))
 print("done")

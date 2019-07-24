@@ -4,9 +4,10 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
+\usepackage{smartdiagram}
+\usefonttheme[onlymath]{serif}
 %\usepackage[T1]{fontenc}
 \usetheme{Madrid}
-\title{Tweets Sentiment Analysis}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -31,6 +32,9 @@
 }
 \lstset{style=mystyle}
 
+\usepackage{xparse}
+
+\title{Tweets Sentiment Analysis}
 \author{Kuo-Wei Ho\inst{1}, Hao-Chien Wang\inst{2}}
 
 \institute[NTU]
@@ -51,6 +55,8 @@
 \begin{frame}{Table of Contents}
 	\tableofcontents[currentsection]
 \end{frame}
+
+
 
 \begin{frame}{Problem}
 	Given a set of data containing 1,600,000 tweets and the sentiment of each tweets. Create a model that can analyze sentiment of new tweets.\\
@@ -91,6 +97,12 @@
 	\end{enumerate}	
 \end{frame}
 
+\begin{frame}{Steps: Overview}
+	\begin{center}
+		\smartdiagram[sequence diagram]{item one, item 2, item 3}
+	\end{center}
+\end{frame}
+
 \begin{frame}{Steps: Data Cleaning and Vectorization}
 	\begin{enumerate}
 		\item Replace URLs as ``url''
@@ -98,18 +110,33 @@
 		\item Remove other non-UTF8 characters (\textit{stri\_enc\_toutf8()} doesn't help)
 		\item Combine tweets into a string, tokenize and remove stopwords.
 		\item Generate TCM, feed it to the neural network to fit the model.
-		\item Generate word vectors.
+		\item Generate word vectors ( $Dim = 200 $ ).
+	\begin{table}[htpb]
+		\scriptsize
+		\centering
+		\caption{Word vectors}
+		\label{tab:wordVec}
+		\begin{tabular}{c | c c c c c}
+			"peanuts" & -0.55638 & 0.04843 & -0.14483 & -0.47563 & \ldots \\
+			"permission" & 0.15835 & 0.06962 & 0.04398 & -0.27275 & \ldots \\ 
+			"beast" & -0.20607 & 0.16818 & -0.17708 & -0.26557 & \ldots \\
+			"eva" & 0.32598 & 0.04554 & -0.72075 & -0.04571 & \ldots \\
+			"pounding" & 0.67231 & 0.00862 & -0.07067 & -0.15407 & \ldots \\
+		\end{tabular}
+	\end{table}
 	\end{enumerate}
 \end{frame}
 
 \begin{frame}{Steps: Tweets Vectorization}
 	\begin{itemize}
 		\item Discard data other than \textbf{sentiment} and \textbf{tweets text}
+		\item Tokenize tweets and lookup the tokens in the word vectors.
 		\item Discard tweets containing more than \textbf{30 tokens} so that the matrices will not contain too much zeros.
+		
 
 	\end{itemize}
 	\begin{table}[htpb]
-		\tiny
+		\scriptsize
 		\centering
 		\caption{Data manipulation}
 		\label{tab:dataMan}
@@ -119,16 +146,51 @@
 			 0 & blagh class at 8 tomorrow  \\
 			 0 & I need a hug  \\
 			 4 & @otibml Thx for the tweet!  \\
-			 4 & Sunshine.....I LOVE this weather!!!  \\
+			 4 & Sunshine! I LOVE this weather!!!  \\
+		\end{tabular}
+		$\Rightarrow$
+		\begin{tabular}{c c}
+			sentiment & tweets \\
+			\hline
+			 0 & blagh class at num tomorrow \\
+			 0 & I need a hug \\
+			 4 & name Thx for the tweet\\
+			 4 & Sunshine! I LOVE this weather!!! \\
+		\end{tabular}
+		$\Rightarrow$
+		\begin{tabular}{c c}
+			sentiment & tweets \\
+			\hline
+			0 & $ \mathbf{A}_{ 30 \times 20 }  $ \\
+			0 & $ \mathbf{B}_{ 30 \times 20 }  $ \\
+			4 & $ \mathbf{C}_{ 30 \times 20 }  $ \\
+			4 & $ \mathbf{D}_{ 30 \times 20 }  $ \\
 		\end{tabular}
 	\end{table}
 	
 \end{frame}
 
+\begin{frame}{Steps: RNN Fitting}
+		
+\end{frame}
+
+\begin{frame}{Difficulties Encountered}
+	\begin{enumerate}
+		\item Hardware limitations (Ram size, CPU/GPU speed): Kill X session, \texttt{gc()/remove()}
+		\item Package problems (Tensorflow)
+		\item Large data size causing difficulties checking results and big waste of time.
+		
+
+	\end{enumerate}
+\end{frame}
+
 \begin{frame}{Dark Magic Functions}
 	\begin{itemize}
-		\item save()/load()
-		\item pbapply
+		\item \texttt{save()/load()}
+		\item \texttt{pbapply}
+		\item \texttt{gc()}
+		\item \texttt{rm()}
+		\item \texttt{abind()}
 
 	\end{itemize}
 	

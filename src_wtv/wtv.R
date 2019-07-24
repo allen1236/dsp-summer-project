@@ -13,9 +13,9 @@ tokens <- text_raw %>%
   #tokenize_words( lowercase=T, strip_punct=T, strip_numeric=F, simplify=F)
   tokenize_words( lowercase=T, strip_punct=F, simplify=F)
 
-stopwords = c('i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 'can', 'will', 'just', "don't", 'should', "should've", 'now', "aren't", "couldn't", "didn't", 'doesn', "doesn't", "hadn't", "hasn't",  "haven't", "isn't", "mightn't", "mustn't",  "needn't", "shouldn't", "wasn't", "weren't", "won't", "wouldn't")
+#stopwords = c('i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 'can', 'will', 'just', "don't", 'should', "should've", 'now', "aren't", "couldn't", "didn't", 'doesn', "doesn't", "hadn't", "hasn't",  "haven't", "isn't", "mightn't", "mustn't",  "needn't", "shouldn't", "wasn't", "weren't", "won't", "wouldn't")
 
-tokens[[1]] = tokens[[1]][! tokens[[1]] %in% stopwords ]
+#tokens[[1]] = tokens[[1]][! tokens[[1]] %in% stopwords ]
 # Create vocabulary. Terms will be unigrams (simple words).
 it = itoken(tokens, progressbar = TRUE)
 vocab <- create_vocabulary(it)
@@ -35,7 +35,7 @@ dim(wv_context)
 
 word_vectors = wv_main + t(wv_context)
 
-write.csv( word_vectors, file = "../data_wtv/word_vectors_50000.csv")
+write.csv( word_vectors, file = "../data_wtv/word_vectors_very_clean.csv")
 
 # numFiles = nrow(word_vectors) %/% 50000 + 1
 # for (i in c(1:numFiles)) 
