@@ -41,7 +41,7 @@
 
 \usepackage{xparse}
 
-\title{Tweets Sentiment Analysis}
+\title{Twitter Sentiment Analysis}
 \author{Kuo-Wei Ho\inst{1}, Hao-Chien Wang\inst{2}}
 
 \institute[NTU]
@@ -62,7 +62,6 @@
 \begin{frame}{Table of Contents}
 	\tableofcontents
 \end{frame}
-
 
 \section{Problem}%
 \label{sec:problem}
@@ -94,7 +93,6 @@
 \label{sec:key_tools}
 
 
-
 \begin{frame}{Key Tools}
 	\begin{itemize}
 		\item Vectorizing text: \textit{GloVe (Global Vectors for Word Representation} by Standford University.)
@@ -119,7 +117,7 @@
 		\item Combine all tweets into one string and tokenize.
 		\item Feed the tokens to GloVe to generate word vectors.
 		\item Tokenize all tweets and search each words in the vectors to transform it into a list of matrices.
-		\item Train the RNN model with the list of metrices.
+		\item Train the RNN model with the list of matrices.
 		\item Test the result with testing data.
 	\end{enumerate}	
 \end{frame}
@@ -127,7 +125,7 @@
 \begin{frame}{Steps: Data Cleaning and Vectorization}
 	\begin{enumerate}
 		\item Replace URLs as ``url''
-		\item Replace name tags ( e.g. \texttt{@allen1234} ) as ``names''
+		\item Replace name tags ( e.g. \texttt{@allen1234} ) as ``name''
 		\item Remove other non-UTF8 characters (\texttt{stri\_enc\_toutf8()} doesn't help)
 		\item Combine tweets into a string, tokenize (and remove stopwords).
 		\item Generate TCM, feed it to the neural network to fit the model.
@@ -191,10 +189,21 @@
 	
 \end{frame}
 
-\begin{frame}{Steps: RNN Fitting}
+\begin{frame}{Steps: RNN Training}
+    \begin{itemize}
+        \item LSTM(\textit{Long Short-Term Memory}):\\  
+            A Type of RNN(\textit{Recurrent Neural Network}) that has a memory cell
+                and can change the value stored depends on the input vector.
+    \end{itemize}
 
     \begin{figure}[h]
-        \includegraphics[trim={1cm 12cm 0 6cm},clip]{img/rnn.pdf}
+        \begin{minipage}{0.7\textwidth}
+            \includegraphics[trim={2cm 12cm 0 6cm},clip,width=7in]{img/rnn.pdf}
+        \end{minipage}
+        \begin{minipage}{0.29\textwidth}
+            \includegraphics[trim={2.5cm 15.2cm 3cm 6cm},clip,width=5in]{img/output.pdf}
+        \end{minipage}
+        
     \end{figure}
 		
 \end{frame}
@@ -203,7 +212,7 @@
 \label{sec:results}
 \begin{frame}{Result}
     \begin{itemize}
-        \item The best accuracy we got on 5,000 testing data is 78.68\%
+        \item The best accuracy we got from 5,000 testing data is $78.68\%$
     \end{itemize}
     \begin{figure}[h]
         \centering
@@ -216,7 +225,10 @@
 
 \begin{frame}{Result}
     \begin{itemize}
-        \item In fact, we got an accuracy of 70$\sim$ 90\% ourselves. (20 testing data)
+        \item In fact, we got an accuracy of $60\sim 80\%$ ourselves. (10 testing data)
+        \item We found that the performance of the model is better 
+            when the embedding word vectors are computed only from testing datas.
+        \item The performance is better with bigger amount of data.
     \end{itemize}
 \end{frame}
 \section{Difficulties encountered}%
@@ -229,8 +241,6 @@
 		\item Package problems (Tensorflow)
 		\item Carelessness on manipulating data, leading to incorrect results.
 		\item Large data size causing difficulties checking results and big waste of time.
-		
-
 	\end{enumerate}
 \end{frame}
 
@@ -242,8 +252,6 @@
 		\item \texttt{gc()}
 		\item \texttt{rm()}
 		\item \texttt{abind()}
-		\item \texttt{melt()}
-
 	\end{itemize}
 	
 \end{frame}
