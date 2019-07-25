@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2019/dev/Debian) (preloaded format=xelatex 2019.5.4)  25 JUL 2019 09:30
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2019/dev/Debian) (preloaded format=xelatex 2019.5.4)  25 JUL 2019 09:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1209,12 +1209,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: img/flow_chart.pdf Graphic file (type pdf)
 <use img/flow_chart.pdf>
 
-Overfull \hbox (45.94397pt too wide) in paragraph at lines 113--113
+Overfull \hbox (32.65904pt too wide) in paragraph at lines 114--114
  [] 
  []
 
 
-Overfull \vbox (22.94354pt too high) detected at line 113
+Overfull \vbox (2.66423pt too high) detected at line 114
  []
 
 [5
@@ -1229,12 +1229,12 @@ Overfull \vbox (22.94354pt too high) detected at line 113
 File: img/rnn.pdf Graphic file (type pdf)
 <use img/rnn.pdf>
 
-Overfull \hbox (243.54544pt too wide) in paragraph at lines 198--198
+Overfull \hbox (243.54544pt too wide) in paragraph at lines 200--200
  [] 
  []
 
 
-Overfull \vbox (75.35326pt too high) detected at line 198
+Overfull \vbox (75.35326pt too high) detected at line 200
  []
 
 [9
@@ -1250,6 +1250,8 @@ File: ../data_rnn/plot/lossplot.pdf Graphic file (type pdf)
 
 ] [12
 
+] [13
+
 ]
 \tf@nav=\write6
 \openout6 = `slides.nav'.
@@ -1260,21 +1262,21 @@ File: ../data_rnn/plot/lossplot.pdf Graphic file (type pdf)
 \tf@snm=\write8
 \openout8 = `slides.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 244.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 244.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 252.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 252.
  (./slides.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 244.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 244.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 252.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 252.
 Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 21609BF6E3697C54F18465B617777E1F.
  ) 
 Here is how much of TeX's memory you used:
- 34181 strings out of 494868
- 689585 string characters out of 6175716
- 795331 words of memory out of 5000000
- 37602 multiletter control sequences out of 15000+600000
- 538215 words of font info for 74 fonts, out of 8000000 for 9000
+ 34189 strings out of 494868
+ 689774 string characters out of 6175716
+ 795378 words of memory out of 5000000
+ 37606 multiletter control sequences out of 15000+600000
+ 538231 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  48i,15n,64p,794b,631s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on slides.pdf (12 pages).
+Output written on slides.pdf (13 pages).
