@@ -6,6 +6,8 @@
 %\usepackage[utf8]{inputenc}
 \usefonttheme[onlymath]{serif}
 %\usepackage[T1]{fontenc}
+\graphicspath{ {./} }
+
 
 \usepackage{xeCJK}
 \setCJKmainfont{Noto Sans CJK SC}
@@ -104,6 +106,13 @@
 \label{sec:steps}
 
 \begin{frame}{Steps: Overview}
+    \begin{figure}[h]
+        \includegraphics[trim={2cm 5cm 0 12cm},clip,height=3in]{img/flow_chart.pdf}
+        \label{fig:}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Steps: Overview}
 	\begin{enumerate}
 		\item Clean the data: remove non-UTF8 symbols, numbers and URLs.
 		\item Combine all tweets into one string and tokenize.
@@ -113,19 +122,12 @@
 	\end{enumerate}	
 \end{frame}
 
-\begin{frame}{Steps: Overview}
-    \begin{figure}[h]
-        \includegraphics[trim={2cm 5cm 0 12cm},clip,height=3in]{img/flow_chart.pdf}
-        \label{fig:}
-    \end{figure}
-\end{frame}
-
 \begin{frame}{Steps: Data Cleaning and Vectorization}
 	\begin{enumerate}
 		\item Replace URLs as ``url''
-		\item Replace name tags ( e.g. @allen1234 ) as ``names''
-		\item Remove other non-UTF8 characters (\textit{stri\_enc\_toutf8()} doesn't help)
-		\item Combine tweets into a string, tokenize and remove stopwords.
+		\item Replace name tags ( e.g. \texttt{@allen1234} ) as ``names''
+		\item Remove other non-UTF8 characters (\texttt{stri\_enc\_toutf8()} doesn't help)
+		\item Combine tweets into a string, tokenize (and remove stopwords).
 		\item Generate TCM, feed it to the neural network to fit the model.
 		\item Generate word vectors ( $Dim = 200 $ ).
 	\begin{table}[htpb]
@@ -153,7 +155,7 @@
 
 	\end{itemize}
 	\begin{table}[htpb]
-		\scriptsize
+		\tiny
 		\centering
 		\caption{Data manipulation}
 		\label{tab:dataMan}
@@ -169,10 +171,10 @@
 		\begin{tabular}{c c}
 			sentiment & tweets \\
 			\hline
-			 0 & blagh class at num tomorrow \\
-			 0 & I need a hug \\
-			 4 & name Thx for the tweet\\
-			 4 & Sunshine! I LOVE this weather!!! \\
+			 0 & ``blagh'' ``class'' ``at'' ``num'' ``tomorrow'' \\
+			 0 & ``i'' ``need'' ``a'' ``hug'' \\
+			 4 & ``name'' ``thx'' ``for'' ``the'' ``tweet''\\
+			 4 & ``sunshine'' ``!'' ``i'' ``love'' ``this'' ``weather'' ``!'' ``!'' ``!'' \\
 		\end{tabular}
 		$\Rightarrow$
 		\begin{tabular}{c c}
@@ -215,7 +217,7 @@
 
 \begin{frame}{Difficulties Encountered}
 	\begin{enumerate}
-		\item Hardware limitations (Ram size, CPU/GPU speed): Kill X session, \texttt{gc()/remove()}
+		\item Hardware limitations (Ram size, CPU/GPU speed): Kill X session, \texttt{gc()/rm()}
 		\item Package problems (Tensorflow)
 		\item Carelessness on manipulating data, leading to incorrect results.
 		\item Large data size causing difficulties checking results and big waste of time.

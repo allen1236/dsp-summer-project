@@ -1,8 +1,10 @@
 \beamer@slide {sec:problem}{3}
 \beamer@slide {tab:data}{3}
-\beamer@slide {sec:results}{4}
-\beamer@slide {sec:key_tools}{5}
-\beamer@slide {sec:steps}{6}
-\beamer@slide {tab:wordVec}{8}
-\beamer@slide {tab:dataMan}{9}
+\beamer@slide {sec:key_tools}{4}
+\beamer@slide {sec:steps}{5}
+\beamer@slide {fig:}{5}
+\beamer@slide {tab:wordVec}{7}
+\beamer@slide {tab:dataMan}{8}
+\beamer@slide {sec:results}{10}
+\beamer@slide {fig:result}{10}
 \beamer@slide {sec:difficulties_encountered}{11}
