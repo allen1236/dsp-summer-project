@@ -107,9 +107,10 @@
 
 \begin{frame}{Steps: Overview}
     \begin{figure}[h]
-        \includegraphics[trim={2cm 5cm 0 12cm},clip,height=3in]{img/flow_chart.pdf}
-        \label{fig:}
+	    \includegraphics[trim={2cm 6cm 0 12.5cm},clip,height=2.5in]{img/flow_chart.pdf}
+        \label{fig:flowchart}
     \end{figure}
+    \textit{Note: The testing data are not in the text fed to GloVe.}
 \end{frame}
 
 \begin{frame}{Steps: Overview}
@@ -119,6 +120,7 @@
 		\item Feed the tokens to GloVe to generate word vectors.
 		\item Tokenize all tweets and search each words in the vectors to transform it into a list of matrices.
 		\item Train the RNN model with the list of metrices.
+		\item Test the result with testing data.
 	\end{enumerate}	
 \end{frame}
 
